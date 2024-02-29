@@ -10,7 +10,7 @@ jobs:
 
       - name: scp a produccio
         run: |
-          echo "${{ secrets.PROD_KEY }}" > ~/prod_key.pem
+          echo "${{ secrets.KEY_SECRET }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
           cd ${{ github.workspace }}
           echo "Action desplegant a produccio" > ./web/last_deploy.txt
