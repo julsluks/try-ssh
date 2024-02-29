@@ -1,20 +1,24 @@
-# name: Preparant per producció
-# run-name: ${{ github.actor }} està pujant l'aplicació a PROD  🚀
-# on: [push]
-# jobs:
-#   Pujar-a-produccio-amb-SCP:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Obtenint el codi del respositori
-#         uses: actions/checkout@v4
+name: Preparant per producció
+run-name: ${{ github.actor }} està pujant l'aplicació a PROD  🚀
+on: [push]
+jobs:
+  Pujar-a-produccio-amb-SCP:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtenint el codi del respositori
+        uses: actions/checkout@v4
 
-#       - name: scp a produccio
-#         run: |
-#           echo "${{ secrets.KEY_SECRET }}" > ~/prod_key.pem
-#           chmod 600 ~/prod_key.pem
-#           cd ${{ github.workspace }}
-#           echo "Action desplegant a produccio" > ./web/last_deploy.txt
-#           date >> ./web/last_deploy.txt
-#           scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./web/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/a22betvilver/web/a22betvilver.try-ssh.cat/public_html/
+      - name: Crear Dist Vue
+        run: |
+          cd ${{ github.workspace }}/vue-actions
+          npm install
+          npm run build
 
-#       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: scp a produccio
+        run: |
+          echo "${{ secrets.KEY_SECRET }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          cd ${{ github.workspace }}/vue-actions
+          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./vue-actions/dist* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/a22betvilver/web/a22betvilver.try-ssh.cat/public_html/
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
