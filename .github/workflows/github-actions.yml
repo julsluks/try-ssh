@@ -19,6 +19,6 @@ jobs:
           echo "${{ secrets.KEY_SECRET }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
           cd ${{ github.workspace }}/vue-actions
-          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./vue-actions/dist* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/a22betvilver/web/a22betvilver.try-ssh.cat/public_html/
+          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./vue-actions/dist/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/a22betvilver/web/a22betvilver.try-ssh.cat/public_html/
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
