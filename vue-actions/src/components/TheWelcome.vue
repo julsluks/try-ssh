@@ -10,7 +10,7 @@
 export default {
   data() {
     return {
-      btnNum: ''
+      BtnNum: ''
     }
   },
   methods: {
