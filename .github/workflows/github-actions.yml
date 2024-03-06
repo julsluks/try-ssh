@@ -6,6 +6,10 @@ on: [push]
 jobs:
   Pujar-a-produccio-amb-SCP:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     steps:
       - name: Obtenint el codi del respositori
         uses: actions/checkout@v4
@@ -14,7 +18,6 @@ jobs:
         run: |
           npm install eslint@8.10.0
           npm install @microsoft/eslint-formatter-sarif@2.1.7
-          npm init @eslint/config
           npx eslint .
             --config .eslintrc.js
             --ext .js,.jsx,.ts,.tsx
